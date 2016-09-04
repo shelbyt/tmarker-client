@@ -1,0 +1,24 @@
+{
+  "name": "A browser action with a popup that changes the page color",
+  "background": {
+         "scripts": ["jquery-3.1.0.min.js", "background.js"]
+       },
+
+  "description": "Change the current page color",
+  "version": "1.0",
+  "commands": {
+    "log-time": {
+      "suggested_key": { "default": "Ctrl+Shift+L" },
+      "description": "Send a 'toggle-feature' event to the extension"
+    }
+},
+  "permissions": [
+    "storage","activeTab", "tabs", "http://*/*", "https://*/*"
+  ],
+  "browser_action": {
+      "default_title": "Set this page's color.",
+      "default_icon": "icon.png",
+      "default_popup": "popup.html"
+  },
+  "manifest_version": 2
+}
