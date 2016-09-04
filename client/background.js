@@ -1,6 +1,23 @@
+var video_url;
+
+function youtubeParser(url) {
+    var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+    var match = url.match(regExp);
+    return (match && match[7].length == 11) ? match[7] : false;
+}
+
 chrome.commands.onCommand.addListener(function(command) {
 
     if (command === "log-time") {
+
+        chrome.tabs.query({
+                'active': true,
+                'windowId': chrome.windows.WINDOW_ID_CURRENT
+            },
+            function(tabs) {
+                video_url = tabs[0].url;
+            }
+        );
 
         //console.log('onCommand event received for message: ', command);
 
@@ -11,7 +28,7 @@ chrome.commands.onCommand.addListener(function(command) {
             //dataType: "json",
             url: "http://ec2-52-42-224-68.us-west-2.compute.amazonaws.com:8080/weedwizard",
             data: {
-                "video": "https://www.youtube.com/watch?v=9DUQ7_7Pj_c"
+                "video": video_url 
             },
             success: function(data) {
                 //console.log("inside post");
@@ -25,17 +42,18 @@ chrome.commands.onCommand.addListener(function(command) {
 
         var time = [];
         var stamp;
-        /*
+        
         chrome.storage.local.clear(function() {
             var error = chrome.runtime.lastError;
             if (error) {
                 console.error(error);
             }
         });
-        */
+        
 
 
         var storage = chrome.storage.local;
+
 
         //console.debug("before post");
         chrome.tabs.executeScript(null, {
@@ -53,10 +71,10 @@ chrome.commands.onCommand.addListener(function(command) {
                 chrome.storage.local.get(function(cfg) {
                     if (typeof(cfg["key"]) !== 'undefined' && cfg["key"] instanceof Array) {
                         cfg["key"].push(stamp);
-                        cfg["title"] = "C++";
+			cfg["videoId"]=youtubeParser(video_url);
                     } else {
-                        cfg["title"] = "C++";
                         cfg["key"] = [stamp];
+			cfg["videoId"]=youtubeParser(video_url);
                     }
                     chrome.storage.local.set(cfg);
                 });
@@ -70,13 +88,13 @@ chrome.commands.onCommand.addListener(function(command) {
 
 
             });
-
+/*
         storage.get("key", function(result) {
             console.log(result);
             console.log(result["key"][0])
 
-            //console output = {myTestVar:'my test var'}
         })
+	*/
 
 
         function callback(bytes) {
