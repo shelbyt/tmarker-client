@@ -31,6 +31,11 @@
                     <sourceDirectory>${basedir}/src/main/json</sourceDirectory>
                     <outputDirectory>${basedir}/src/main/java-gen</outputDirectory>
                     <targetPackage>com.newground.weedwizard.schemas</targetPackage>
+                    <generateBuilders>true</generateBuilders>
+                    <constructorsRequiredPropertiesOnly>true</constructorsRequiredPropertiesOnly>
+                    <includeConstructors>true</includeConstructors>
+                    <removeOldOutput>true</removeOldOutput>
+                    <usePrimitives>true</usePrimitives>
                 </configuration>
                 <executions>
                     <execution>

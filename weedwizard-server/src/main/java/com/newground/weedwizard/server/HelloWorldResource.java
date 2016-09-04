@@ -31,7 +31,7 @@ public class HelloWorldResource {
 
     @POST
     @Timed
-    public Tick postHello(@QueryParam("tick") Optional<Tick> tick) {
-        return tick.get();
+    public String postHello(@QueryParam("tick") Optional<Tick> tick) {
+        return "RECEIVED!";
     }
 }
