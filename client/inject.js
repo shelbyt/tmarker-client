@@ -1,15 +1,15 @@
 var video = document.getElementsByTagName("video")[0];
-        // Save it using the Chrome extension storage API.
-        //chrome.storage.sync.set({'time': video.currentTime}, function() {
-          // Notify that we saved.
-          //message('Settings saved');
-       // });
+// Save it using the Chrome extension storage API.
+//chrome.storage.sync.set({'time': video.currentTime}, function() {
+// Notify that we saved.
+//message('Settings saved');
+// });
 
 var storage = chrome.storage.local;
 
 var myTestVar = 'myVariableKeyName';
 
-var obj= {};
+var obj = {};
 
 obj[myTestVar] = 'my test var';
 
@@ -41,5 +41,3 @@ alert(window.location.href);
 video.currentTime
 
 //document.body.style.backgroundColor="red";
-
-
