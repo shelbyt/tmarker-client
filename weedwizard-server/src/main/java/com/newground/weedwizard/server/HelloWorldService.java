@@ -1,4 +1,4 @@
-package com.newground.weedwizard;
+package com.newground.weedwizard.server;
 
 import com.yammer.dropwizard.Service;
 import com.yammer.dropwizard.config.Bootstrap;
@@ -17,8 +17,8 @@ public class HelloWorldService extends Service<HelloWorldConfiguration> {
     @Override
     public void run(HelloWorldConfiguration configuration,
                     Environment environment) {
-        final String template = configuration.getTemplate();
-        final String defaultName = configuration.getDefaultName();
+        final String template = "TEMPLATE";
+        final String defaultName = "DEFAULT NAME";
         environment.addResource(new HelloWorldResource(template, defaultName));
         environment.addHealthCheck(new TemplateHealthCheck(template));
     }

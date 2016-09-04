@@ -62,6 +62,7 @@ target/
 
 ### Java template
 *.class
+java-gen
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/

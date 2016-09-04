@@ -1,6 +1,7 @@
-package com.newground.weedwizard;
+package com.newground.weedwizard.server;
 
 import com.google.common.base.Optional;
+import com.newground.weedwizard.schemas.Tick;
 import com.yammer.metrics.annotation.Timed;
 
 import javax.ws.rs.*;
@@ -30,8 +31,7 @@ public class HelloWorldResource {
 
     @POST
     @Timed
-    public Saying postHello(@QueryParam("name") Optional<String> name) {
-        return new Saying(counter.incrementAndGet(),
-                String.format(template, name.or(defaultName)));
+    public Tick postHello(@QueryParam("tick") Optional<Tick> tick) {
+        return tick.get();
     }
 }

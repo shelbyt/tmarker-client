@@ -1,4 +1,4 @@
-package com.newground.weedwizard;
+package com.newground.weedwizard.server;
 
 public class Saying {
     private final long id;

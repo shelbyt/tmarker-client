@@ -1,4 +1,4 @@
-package com.newground.weedwizard;
+package com.newground.weedwizard.server;
 
 import com.yammer.dropwizard.config.Configuration;
 import com.fasterxml.jackson.annotation.JsonProperty;
