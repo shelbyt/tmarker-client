@@ -1,19 +1,23 @@
 var video = document.getElementsByTagName("video")[0];
+alert(window.location.href);
+video.currentTime
+
 // Save it using the Chrome extension storage API.
 //chrome.storage.sync.set({'time': video.currentTime}, function() {
 // Notify that we saved.
 //message('Settings saved');
 // });
 
-var storage = chrome.storage.local;
 
-var myTestVar = 'myVariableKeyName';
+//var storage = chrome.storage.local;
 
-var obj = {};
+//var myTestVar = 'myVariableKeyName';
 
-obj[myTestVar] = 'my test var';
+//var obj = {};
 
-storage.set(obj);
+//obj[myTestVar] = 'my test var';
+
+//storage.set(obj);
 /*
 storage.get(myTestVar,function(result){
   console.log(myTestVar,result);
@@ -36,8 +40,8 @@ storage.get('myTestVar',function(result){
 
 */
 
-alert(window.location.href);
+//alert(window.location.href);
 //console.log(video.src);
-video.currentTime
+//video.currentTime
 
 //document.body.style.backgroundColor="red";
