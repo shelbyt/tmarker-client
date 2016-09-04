@@ -1,4 +1,5 @@
 var video_url;
+var video_id;
 
 function youtubeParser(url) {
     var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
@@ -16,6 +17,7 @@ chrome.commands.onCommand.addListener(function(command) {
             },
             function(tabs) {
                 video_url = tabs[0].url;
+                video_id = youtubeParser(video_url);
             }
         );
 
@@ -28,7 +30,7 @@ chrome.commands.onCommand.addListener(function(command) {
             //dataType: "json",
             url: "http://ec2-52-42-224-68.us-west-2.compute.amazonaws.com:8080/weedwizard",
             data: {
-                "video": video_url 
+                "video": video_url
             },
             success: function(data) {
                 //console.log("inside post");
@@ -42,14 +44,18 @@ chrome.commands.onCommand.addListener(function(command) {
 
         var time = [];
         var stamp;
-        
+
+/*
         chrome.storage.local.clear(function() {
             var error = chrome.runtime.lastError;
             if (error) {
                 console.error(error);
             }
         });
-        
+	*/
+	
+
+
 
 
         var storage = chrome.storage.local;
@@ -69,13 +75,24 @@ chrome.commands.onCommand.addListener(function(command) {
                 stamp = time[0][0];
                 //console.log(time.length);
                 chrome.storage.local.get(function(cfg) {
-                    if (typeof(cfg["key"]) !== 'undefined' && cfg["key"] instanceof Array) {
-                        cfg["key"].push(stamp);
-			cfg["videoId"]=youtubeParser(video_url);
+			/*
+			var tick_key = cfg[video_id];
+                    if (typeof(tick_key) !== 'undefined' &&
+                        tick_key["ticks"] instanceof Array) {
+
+                        tick_key["ticks"].push(stamp);
                     } else {
-                        cfg["key"] = [stamp];
-			cfg["videoId"]=youtubeParser(video_url);
+                        tick_key["ticks"] = [stamp];
                     }
+		    */
+
+                    
+                    if (typeof(cfg[video_id]) !== 'undefined' && cfg[video_id] instanceof Array) {
+                        cfg[video_id].push(stamp);
+                    } else {
+                        cfg[video_id] = [stamp];
+                    }
+		    
                     chrome.storage.local.set(cfg);
                 });
                 /*
@@ -88,13 +105,13 @@ chrome.commands.onCommand.addListener(function(command) {
 
 
             });
-/*
-        storage.get("key", function(result) {
-            console.log(result);
-            console.log(result["key"][0])
+        /*
+                storage.get("key", function(result) {
+                    console.log(result);
+                    console.log(result["key"][0])
 
-        })
-	*/
+                })
+        	*/
 
 
         function callback(bytes) {
