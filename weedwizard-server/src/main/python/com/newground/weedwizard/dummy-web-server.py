@@ -21,7 +21,8 @@ import SocketServer
 import urlparse
 import json
 import youtube_dl
-class S(BaseHTTPRequestHandler):
+
+class SimpleServer(BaseHTTPRequestHandler):
     def _set_headers(self):
         self.send_response(200)
         self.send_header('Content-type', 'text/html')
@@ -51,7 +52,7 @@ class S(BaseHTTPRequestHandler):
         self._set_headers()
         self.wfile.write("<html><body><h1>" + json.dumps(fields) + "</h1></body></html>")
         
-def run(server_class=HTTPServer, handler_class=S, port=80):
+def run(server_class=HTTPServer, handler_class=SimpleServer, port=80):
     server_address = ('', port)
     httpd = server_class(server_address, handler_class)
     print 'Starting httpd...'
