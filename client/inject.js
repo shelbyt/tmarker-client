@@ -14,7 +14,7 @@ var obj= {};
 obj[myTestVar] = 'my test var';
 
 storage.set(obj);
-
+/*
 storage.get(myTestVar,function(result){
   console.log(myTestVar,result);
   //console output = myVariableKeyName {myTestVar:'my test var'}
@@ -34,9 +34,11 @@ storage.get('myTestVar',function(result){
             console.log(result)
         });
 
+*/
 
-
-alert(video.currentTime);
+alert(window.location.href);
+//console.log(video.src);
+video.currentTime
 
 //document.body.style.backgroundColor="red";
 
