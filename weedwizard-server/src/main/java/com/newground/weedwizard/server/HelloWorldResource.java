@@ -1,10 +1,13 @@
 package com.newground.weedwizard.server;
 
 import com.google.common.base.Optional;
-import com.newground.weedwizard.schemas.Tick;
 import com.yammer.metrics.annotation.Timed;
 
-import javax.ws.rs.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -31,7 +34,8 @@ public class HelloWorldResource {
 
     @POST
     @Timed
-    public String postHello(@QueryParam("tick") Optional<Tick> tick) {
-        return "RECEIVED!";
+    public Saying postHello(@QueryParam("tick") Optional<String> name) {
+        return new Saying(counter.incrementAndGet(),
+                String.format(template, name.or(defaultName)));
     }
 }
