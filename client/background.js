@@ -1,5 +1,6 @@
 var video_url;
 var video_id;
+var video_time;
 
 function youtubeParser(url) {
     var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
@@ -23,22 +24,6 @@ chrome.commands.onCommand.addListener(function(command) {
 
         //console.log('onCommand event received for message: ', command);
 
-        console.log("before post");
-        jQuery.ajax({
-            type: "POST",
-            async: false,
-            //dataType: "json",
-            url: "http://ec2-52-42-224-68.us-west-2.compute.amazonaws.com:8080/weedwizard",
-            data: {
-                "video": video_url
-            },
-            success: function(data) {
-                //console.log("inside post");
-                console.log(data);
-                //console.debug(data);
-            }
-        });
-        console.log("after post");
 
 
 
@@ -73,6 +58,7 @@ chrome.commands.onCommand.addListener(function(command) {
                 //console.log(time);
                 //console.log(time[0][0]);
                 stamp = time[0][0];
+                video_time = stamp;
                 //console.log(time.length);
                 chrome.storage.local.get(function(cfg) {
 			/*
@@ -105,6 +91,25 @@ chrome.commands.onCommand.addListener(function(command) {
 
 
             });
+
+        console.log("before post");
+        jQuery.ajax({
+            type: "POST",
+            async: false,
+            dataType: "json",
+            contentType:"application/json; charset=utf-8",
+            url: "http://ec2-52-42-224-68.us-west-2.compute.amazonaws.com:8080/weedwizard",
+
+            data: JSON.stringify({
+                "tickedAt": video_time, "videoId": video_id
+            }),
+            success: function(data) {
+                //console.log("inside post");
+                console.log(data);
+                //console.debug(data);
+            }
+        });
+        console.log("after post");
         /*
                 storage.get("key", function(result) {
                     console.log(result);
