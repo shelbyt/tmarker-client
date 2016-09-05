@@ -2,10 +2,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.newground.weedwizard</groupId>
-    <artifactId>weedwizard-server</artifactId>
+    <artifactId>weedwizard-api</artifactId>
     <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>weedwizard-server</name>
+    <name>weedwizard-api</name>
     <url>http://maven.apache.org</url>
 
     <build>
@@ -40,7 +40,7 @@
                                         implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>com.newground.weedwizard.server.WeedWizardService</mainClass>
+                                    <mainClass>com.newground.weedwizard.api.HelloWorldService</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
@@ -69,9 +69,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.newground.weedwizard</groupId>
-            <artifactId>weedwizard-api</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <groupId>com.yammer.dropwizard</groupId>
+            <artifactId>dropwizard-core</artifactId>
+            <version>0.6.1</version>
         </dependency>
         <dependency>
             <groupId>com.newground.weedwizard</groupId>

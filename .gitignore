@@ -76,6 +76,7 @@ java-gen
 hs_err_pid*
 .idea
 *.iml
+generated
 
 
 

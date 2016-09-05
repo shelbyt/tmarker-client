@@ -8,6 +8,5 @@
     "videoId" : {
       "type" : "string"
     }
-  },
-  "required" : ["videoId"]
+  }
 }

@@ -9,8 +9,15 @@
     <url>http://maven.apache.org</url>
 
     <build>
-        <sourceDirectory>src/main/java-gen</sourceDirectory>
+        <sourceDirectory>src/main/java</sourceDirectory>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <generatedSourcesDirectory>src/main/generated</generatedSourcesDirectory>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -29,7 +36,7 @@
                 <version>0.4.26</version>
                 <configuration>
                     <sourceDirectory>${basedir}/src/main/json</sourceDirectory>
-                    <outputDirectory>${basedir}/src/main/java-gen</outputDirectory>
+                    <outputDirectory>${basedir}/src/main/generated</outputDirectory>
                     <targetPackage>com.newground.weedwizard.schemas</targetPackage>
                     <generateBuilders>true</generateBuilders>
                     <constructorsRequiredPropertiesOnly>true</constructorsRequiredPropertiesOnly>
