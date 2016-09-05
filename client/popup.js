@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     youtube_url_time = "\">" + (secToHrMin(result[allKeys[i]][row_counter].toFixed(2))).toString();
                     youtube_url = youtube_url_start + youtube_url_builder + youtube_url_time + youtube_url_end;
                     myTable += "<td style='width: 100px; text-align: center;'>" + youtube_url + "</td>";
-                    youtube_url_builder = "\"https://www.youtu.be/";
+                    youtube_url_builder = "\"https://youtu.be/";
                     no_print_counter = 0;
 
                 } else {
