@@ -14,26 +14,26 @@ function click(e) {
 
 
 function secToHrMin(time) {
-// Minutes and seconds
-var mins = ~~(time / 60);
-var secs = time % 60;
+    // Minutes and seconds
+    var mins = ~~(time / 60);
+    var secs = time % 60;
 
-// Hours, minutes and seconds
-var hrs = ~~(time / 3600);
-var mins = ~~((time % 3600) / 60);
-//TODO:(shelbyt): Check other times when this toFixed is needed
-var secs = (time % 60).toFixed(0);
+    // Hours, minutes and seconds
+    var hrs = ~~(time / 3600);
+    var mins = ~~((time % 3600) / 60);
+    //TODO:(shelbyt): Check other times when this toFixed is needed
+    var secs = (time % 60).toFixed(0);
 
-// Output "1:01" or "4:03:59" or "123:03:59"
-var ret = "";
+    // Output "1:01" or "4:03:59" or "123:03:59"
+    var ret = "";
 
-if (hrs > 0) {
-    ret += "" + hrs + ":" + (mins < 10 ? "0" : "");
-}
+    if (hrs > 0) {
+        ret += "" + hrs + ":" + (mins < 10 ? "0" : "");
+    }
 
-ret += "" + mins + ":" + (secs < 10 ? "0" : "");
-ret += "" + secs;
-return ret;
+    ret += "" + mins + ":" + (secs < 10 ? "0" : "");
+    ret += "" + secs;
+    return ret;
 }
 
 
@@ -112,27 +112,51 @@ document.addEventListener('DOMContentLoaded', function() {
 
         }
 
+        var no_print_counter = 0;
+        var row_counter = 0;
+        while (1) {
+            for (var i = 0; i < allKeys.length; i++) {
+                if (i == 0 && row_counter == 0) {
+                    myTable += "<tr>";
+                }
+                if (typeof result[allKeys[i]][row_counter] !== 'undefined') {
+                    myTable += "<td style='width: 100px; text-align: center;'>" + secToHrMin(result[allKeys[i]][row_counter].toFixed(2)) + "</td>";
+                    no_print_counter = 0;
 
-        for (var i = 0; i < allKeys.length; i++) {
-            for (var j = 0; j < result[allKeys[i]].length; j++) {
-
-                if (i == 0) {
-
-                    myTable += "<tr><td style='width: 100px;'>" + secToHrMin(result[allKeys[i]][j].toFixed(2)) + "</td>";
                 } else {
-                    if (i == allKeys.length - 1) {
-
-                        myTable += "<td style='width: 100px; text-align: right;'>" +  secToHrMin(result[allKeys[i]][j].toFixed(2)) + "</td></tr>";
-                    } else {
-
-                        myTable += "<td style='width: 100px; text-align: right;'>" + secToHrMin(result[allKeys[i]][j].toFixed(2)) + "</td>";
-                    }
+                    myTable += "<td style='width: 100px; text-align: center;'> </td>";
+                    no_print_counter++;
 
                 }
+            }
 
-
+            myTable += "</tr>";
+            row_counter++;
+            if (no_print_counter == allKeys.length || row_counter == allKeys.length) {
+                break;
             }
         }
+
+
+        /*
+                for (var i = 0; i < result[allKeys[i]].length; i++) {
+                    for (var j = 0; j < allKeys.length; j++) {
+                        if (i == 0 && j == 0) {
+                            myTable += "<tr>";
+                        }
+
+                        myTable += "<td style='width: 100px;'>" + secToHrMin(result[allKeys[i]][j].toFixed(2)) + "</td>";
+
+                    }
+                    if ((j == (allKeys.length - 1)) && (i == result[allKeys[i]].length - 1)) {
+                        myTable += "</tr>";
+                    }
+
+
+                }
+        	*/
+
+
 
         /*
          */
@@ -143,22 +167,22 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     /*
-                                                var h = document.createElement("H1");
+                                                    var h = document.createElement("H1");
 
-                                                //TODO:(shelbyt): Need to pass in correct key of title
-                                                var myTable = "<table><tr><td style='width: 100px; color: red;'>" + result["videoId"] + "</td></tr>"; myTable += "<tr><td style='width: 100px;                   '>---------------</td></tr>";
+                                                    //TODO:(shelbyt): Need to pass in correct key of title
+                                                    var myTable = "<table><tr><td style='width: 100px; color: red;'>" + result["videoId"] + "</td></tr>"; myTable += "<tr><td style='width: 100px;                   '>---------------</td></tr>";
 
-                                                for (var i = 0; i < 5; i++) {
-                                                    //result["key"][i] = myArray[i].toFixed(3);
-                                                    myTable += "<td style='width: 100px;'>" + result["key"][i] + "</td></tr>";
-                                                }
-                        			
-                                                myTable += "</table>"; document.write(myTable);
+                                                    for (var i = 0; i < 5; i++) {
+                                                        //result["key"][i] = myArray[i].toFixed(3);
+                                                        myTable += "<td style='width: 100px;'>" + result["key"][i] + "</td></tr>";
+                                                    }
+                            			
+                                                    myTable += "</table>"; document.write(myTable);
 
-                        //console.log(result);
-                        //document.getElementById('yellow').innerHTML = result["key"][0];
-                        //console output = {myTestVar:'my test var'}
-		    */
+                            //console.log(result);
+                            //document.getElementById('yellow').innerHTML = result["key"][0];
+                            //console output = {myTestVar:'my test var'}
+    		    */
     var divs = document.querySelectorAll('div');
     for (var i = 0; i < divs.length; i++) {
         divs[i].addEventListener('click', click);
