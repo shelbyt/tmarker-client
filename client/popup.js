@@ -114,13 +114,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
         var no_print_counter = 0;
         var row_counter = 0;
+
+        var youtube_url_start = "<a href=";
+        var youtube_url_builder = "\"https://youtu.be/";
+        var youtube_url_end = "</a>";
+        var youtube_url_time;
+        var youtube_url;
         while (1) {
             for (var i = 0; i < allKeys.length; i++) {
                 if (i == 0 && row_counter == 0) {
                     myTable += "<tr>";
                 }
                 if (typeof result[allKeys[i]][row_counter] !== 'undefined') {
-                    myTable += "<td style='width: 100px; text-align: center;'>" + secToHrMin(result[allKeys[i]][row_counter].toFixed(2)) + "</td>";
+                    youtube_url_builder += (allKeys[i]).toString() + "?t=" + (result[allKeys[i]][row_counter]).toString();
+                    youtube_url_time = "\">" + (secToHrMin(result[allKeys[i]][row_counter].toFixed(2))).toString();
+                    youtube_url = youtube_url_start + youtube_url_builder + youtube_url_time + youtube_url_end;
+                    myTable += "<td style='width: 100px; text-align: center;'>" + youtube_url + "</td>";
+                    youtube_url_builder = "\"https://www.youtu.be/";
                     no_print_counter = 0;
 
                 } else {
