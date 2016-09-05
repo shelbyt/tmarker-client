@@ -35,6 +35,7 @@ function secToHrMin(time) {
 
 document.addEventListener('DOMContentLoaded', function() {
 
+
     // var h = document.createElement("H1");
     // var t = document.createTextNode("Hello World");
     // h.appendChild(t);
@@ -108,16 +109,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         var no_print_counter = 0;
-        var row_counter = 0;
 
         var youtube_url_start = "<a href=";
         var youtube_url_builder = "\"https://youtu.be/";
         var youtube_url_end = "</a>";
         var youtube_url_time;
         var youtube_url;
-        while (1) {
+	var row_counter = 0;
+
+        while (no_print_counter < allKeys.length) {
             for (var i = 0; i < allKeys.length; i++) {
-                if (i == 0 && row_counter == 0) {
+                if (i == 0) {
+	    	    // Start of table row
                     myTable += "<tr>";
                 }
                 if (typeof result[allKeys[i]][row_counter] !== 'undefined') {
@@ -134,12 +137,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 }
             }
-
+	    // End of table row
             myTable += "</tr>";
-            row_counter++;
-            if (no_print_counter == allKeys.length || row_counter == allKeys.length) {
-                break;
-            }
+	    row_counter++;
         }
 
 
