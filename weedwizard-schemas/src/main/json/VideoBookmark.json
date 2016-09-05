@@ -1,0 +1,23 @@
+{
+  "name" : "VideoBookmark",
+  "type" : "object",
+  "description": "Represents a timestamp in a video.",
+  "properties" : {
+    "userId" : {
+      "type" : "string"
+    },
+    "videoId" : {
+      "type" : "string"
+    },
+    "tickedAt" : {
+      "type" : "integer"
+    },
+    "videoBookmarkUrl" : {
+      "type" : "string"
+    },
+    "videoUrl" : {
+      "type" : "string"
+    }
+  },
+  "required":["userId", "videoId"]
+}

@@ -1,6 +1,6 @@
 package com.newground.weedwizard.server;
 
-import com.newground.weedwizard.api.TickResource;
+import com.newground.weedwizard.api.VideoBookmarkResource;
 import com.yammer.dropwizard.Service;
 import com.yammer.dropwizard.config.Bootstrap;
 import com.yammer.dropwizard.config.Environment;
@@ -18,7 +18,7 @@ public class WeedWizardService extends Service<WeedWizardConfiguration> {
     @Override
     public void run(WeedWizardConfiguration configuration,
                     Environment environment) {
-        environment.addResource(new TickResource());
+        environment.addResource(new VideoBookmarkResource());
         environment.addHealthCheck(new WeedWizardHealthCheck());
     }
 }

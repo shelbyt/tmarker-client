@@ -1,0 +1,88 @@
+{
+  "name" : "VideoInfo",
+  "type" : "object",
+  "description": "Represents metadata about a youtube video.",
+  "properties" : {
+    "id" : {
+      "type" : "string"
+    },
+    "full_title" : {
+      "type" : "string"
+    },
+    "title" : {
+      "type" : "string"
+    },
+    "upload_date" : {
+      "type" : "string"
+    },
+    "display_id" : {
+      "type" : "string"
+    },
+    "thumbnail" : {
+      "type" : "string"
+    },
+    "license" : {
+      "type" : "string"
+    },
+    "uploader_id" : {
+      "type" : "string"
+    },
+    "uploader" : {
+      "type" : "string"
+    },
+    "player_url" : {
+      "type" : "string"
+    },
+    "webpage_url" : {
+      "type" : "string"
+    },
+    "webpage_url_basename" : {
+      "type" : "string"
+    },
+    "resolution" : {
+      "type" : "string"
+    },
+    "format" : {
+      "type" : "string"
+    },
+    "ext" : {
+      "type" : "string"
+    },
+    "duration" : {
+      "type" : "integer"
+    },
+    "width" : {
+      "type" : "integer"
+    },
+    "height" : {
+      "type" : "integer"
+    },
+    "http_header" : {
+      "type" : "com.newground.weedwizard.impl.youtubedl.HttpHeader"
+    },
+    "categories" : {
+      "type" : "array",
+      "items" : {
+        "type" : "string"
+      }
+    },
+    "tags" : {
+      "type" : "array",
+      "items" : {
+        "type" : "string"
+      }
+    },
+    "formats" : {
+      "type" : "array",
+      "items" : {
+        "type" : "com.newground.weedwizard.impl.youtubedl.VideoFormat"
+      }
+    },
+    "thumbnails" : {
+      "type" : "array",
+      "items" : {
+        "type" : "com.newground.weedwizard.impl.youtubedl.VideoThumbnail"
+      }
+    }
+  }
+}

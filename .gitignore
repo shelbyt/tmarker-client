@@ -63,6 +63,7 @@ target/
 ### Java template
 *.class
 java-gen
+generated
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
@@ -76,7 +77,8 @@ java-gen
 hs_err_pid*
 .idea
 *.iml
-generated
 
+#temp files
+*.ttml
 
 

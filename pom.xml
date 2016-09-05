@@ -12,6 +12,7 @@
         <module>weedwizard-api</module>
         <module>weedwizard-schemas</module>
         <module>weedwizard-server</module>
+        <module>weedwizard-impl</module>
     </modules>
     <dependencies>
         <dependency>

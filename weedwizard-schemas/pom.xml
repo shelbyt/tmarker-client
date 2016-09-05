@@ -9,7 +9,6 @@
     <url>http://maven.apache.org</url>
 
     <build>
-        <sourceDirectory>src/main/java</sourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -38,6 +37,7 @@
                     <sourceDirectory>${basedir}/src/main/json</sourceDirectory>
                     <outputDirectory>${basedir}/src/main/generated</outputDirectory>
                     <targetPackage>com.newground.weedwizard.schemas</targetPackage>
+                    <propertyWordDelimiters>_</propertyWordDelimiters>
                     <generateBuilders>true</generateBuilders>
                     <constructorsRequiredPropertiesOnly>true</constructorsRequiredPropertiesOnly>
                     <includeConstructors>true</includeConstructors>
