@@ -1,18 +1,21 @@
 package com.newground.weedwizard.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.collect.ImmutableList;
 import com.newground.weedwizard.impl.youtubedl.YoutubeDL;
 import com.newground.weedwizard.impl.youtubedl.YoutubeDLException;
 import com.newground.weedwizard.impl.youtubedl.YoutubeDLRequest;
 import com.newground.weedwizard.impl.youtubedl.YoutubeDLResponse;
 import com.newground.weedwizard.schemas.VideoBookmark;
 import com.newground.weedwizard.schemas.VideoInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by thomaschow on 9/5/16.
@@ -20,22 +23,29 @@ import java.util.List;
 public class WeedWizardFacade {
     private static final String MODULE = WeedWizardFacade.class.getName();
     private static final Logger LOG = LoggerFactory.getLogger(MODULE);
-    private YoutubeDL youtubeDL;
+    private Map<String, List<VideoBookmark>> bookmarkCache;
 
     public WeedWizardFacade() {
-        youtubeDL = new YoutubeDL();
+        bookmarkCache = new ConcurrentHashMap<>();
     }
 
     public VideoBookmark create(VideoBookmark bookmark) throws Exception {
-        String videoUrl = bookmark.getVideoUrl();
-        LOG.info(videoUrl);
-        downloadSubtitles(videoUrl);
+        if (bookmark != null) {
+            String videoUrl = bookmark.getVideoUrl();
+            bookmarkCache.computeIfAbsent(videoUrl, k -> new ArrayList<>());
+            bookmarkCache.get(videoUrl).add(bookmark);
+            LOG.info(videoUrl);
+            downloadSubtitles(videoUrl);
+        }
         return null;
     }
 
     public List<VideoBookmark> findByVideoUrl(String videoUrl) throws Exception {
-        LOG.info(videoUrl);
-        return ImmutableList.of(new VideoBookmark());
+        if (StringUtils.isNotEmpty(videoUrl)) {
+            LOG.info(videoUrl);
+            return bookmarkCache.get(videoUrl);
+        }
+        return null;
     }
 
     private VideoInfo downloadSubtitles(String videoUrl) throws Exception {

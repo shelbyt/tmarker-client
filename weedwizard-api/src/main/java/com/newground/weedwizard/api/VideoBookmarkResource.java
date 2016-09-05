@@ -13,7 +13,9 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/weedwizard")
@@ -43,7 +45,9 @@ public class VideoBookmarkResource {
 
     @GET
     @Timed
-    public List<VideoBookmark> findByVideoUrl(@QueryParam("videoUrl") String videoUrl) throws Exception {
-        return weedWizardFacade.findByVideoUrl(videoUrl);
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response findByVideoUrl(@QueryParam("videoUrl") String videoUrl) throws Exception {
+        List<VideoBookmark> results = weedWizardFacade.findByVideoUrl(videoUrl);
+        return Response.ok().entity(results).build();
     }
 }

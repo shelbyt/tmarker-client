@@ -2,12 +2,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.newground.weedwizard</groupId>
-    <artifactId>weedwizard-api</artifactId>
+    <artifactId>weedwizard-db</artifactId>
     <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>weedwizard-api</name>
+    <name>weedwizard-db</name>
     <url>http://maven.apache.org</url>
-
     <parent>
         <groupId>com.newground.weedwizard</groupId>
         <artifactId>weedwizard</artifactId>
@@ -33,24 +32,6 @@
                         </filter>
                     </filters>
                 </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <transformers>
-                                <transformer
-                                        implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
-                                <transformer
-                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>com.newground.weedwizard.api.HelloWorldService</mainClass>
-                                </transformer>
-                            </transformers>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -68,25 +49,14 @@
     </build>
     <dependencies>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.yammer.dropwizard</groupId>
-            <artifactId>dropwizard-core</artifactId>
-            <version>0.6.1</version>
-        </dependency>
-        <dependency>
             <groupId>com.newground.weedwizard</groupId>
             <artifactId>weedwizard-schemas</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>com.newground.weedwizard</groupId>
-            <artifactId>weedwizard-impl</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.4.1208</version>
         </dependency>
     </dependencies>
 </project>

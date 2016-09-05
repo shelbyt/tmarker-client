@@ -6,18 +6,18 @@
     "userId" : {
       "type" : "string"
     },
-    "videoId" : {
+    "videoBookmarkId" : {
       "type" : "string"
     },
     "tickedAt" : {
       "type" : "integer"
     },
-    "videoBookmarkUrl" : {
+    "videoName" : {
       "type" : "string"
     },
     "videoUrl" : {
       "type" : "string"
     }
   },
-  "required":["userId", "videoId"]
+  "required":["videoBookmarkId"]
 }

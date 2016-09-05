@@ -80,5 +80,6 @@ hs_err_pid*
 
 #temp files
 *.ttml
+*.csv
 
 
