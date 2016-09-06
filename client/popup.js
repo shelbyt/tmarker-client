@@ -31,7 +31,66 @@ function secToHrMin(time) {
     return ret;
 }
 
+function insertTableTitle(all_keys) {
+    tabBody = document.getElementById("main");
+    row = document.createElement("tr");
+    for (var i = 0; i < all_keys.length; i++) {
+        cell1 = document.createElement("th");
+        textnode1 = document.createTextNode(all_keys[i]);
+        cell1.appendChild(textnode1);
+        row.appendChild(cell1);
+    }
+    tabBody.appendChild(row);
+}
 
+function insertTableRow(row_counter, all_keys, storage) {
+
+    tabBody = document.getElementById("main");
+    row = document.createElement("tr");
+
+    var no_print_counter = 0;
+    var youtube_url_start = "<a href=";
+    var youtube_url_builder = "https://youtu.be/";
+    var youtube_url_end = "</a>";
+    var youtube_url_time;
+    var youtube_url;
+
+    for (var i = 0; i < all_keys.length; i++) {
+        if (typeof storage[all_keys[i]][row_counter] !== 'undefined') {
+            youtube_url_builder += (all_keys[i]).toString() + "?t=" + (storage[all_keys[i]][row_counter]).toString();
+            youtube_url_time = (secToHrMin(storage[all_keys[i]][row_counter].toFixed(2))).toString();
+
+            cell1 = document.createElement("td");
+	    var a = document.createElement('a');
+	    var link_text = document.createTextNode(youtube_url_time);
+	    a.appendChild(link_text);
+	    a.href = youtube_url_builder;
+
+            cell1.appendChild(a);
+            row.appendChild(cell1);
+
+            youtube_url_builder = "https://youtu.be/";
+            no_print_counter = 0;
+
+        } else {
+            cell1 = document.createElement("td");
+            textnode1 = document.createTextNode("");
+            cell1.appendChild(textnode1);
+            row.appendChild(cell1);
+            no_print_counter++;
+        }
+    }
+
+    tabBody.appendChild(row);
+    return no_print_counter;
+}
+
+function insertTableData(all_keys,storage) {
+        var row_counter = 0;
+        while (insertTableRow(row_counter, all_keys, storage) < all_keys.length) {
+            row_counter++;
+        }
+}
 
 document.addEventListener('DOMContentLoaded', function() {
 
@@ -61,133 +120,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     var storage = chrome.storage.local;
-    //document.write("<p>hello</p>");
     //TODO:(shelbyt): Change to get key AND title of video
     storage.get(null, function(result) {
         console.log(result);
         console.log(result);
         var allKeys = Object.keys(result);
         console.log(allKeys);
-        /*
-        chrome.storage.sync.get(null, function(items) {
-            var allKeys = Object.keys(items);
-            console.log(allKeys);
-        });
-        */
 
-        var myTable;
-
-
-        for (var i = 0; i < allKeys.length; i++) {
-            if (i == 0) {
-                myTable = "<table><tr><td style='width: 100px; color: red;'>" +
-                    allKeys[i] + "</td>";
-            } else {
-                if (i == allKeys.length - 1) {
-                    myTable += "<td style='width: 100px; color: red; text-align: right;'>" +
-                        allKeys[i] + "</td></tr>";
-                } else {
-                    myTable += "<td style='width: 100px; color: red; text-align: right;'>" +
-                        allKeys[i] + "</td>";
-                }
-            }
-        }
-
-        for (var i = 0; i < allKeys.length; i++) {
-            if (i == 0) {
-                myTable += "<tr><td style='width: 100px;                   '>---------------</td>";
-            } else {
-                if (i == allKeys.length - 1) {
-                    myTable += "<td     style='width: 100px; text-align: right;'>---------------</td></tr>";
-                } else {
-                    myTable += "<td     style='width: 100px; text-align: right;'>---------------</td>";
-
-                }
-
-            }
-
-        }
-
-        var no_print_counter = 0;
-
-        var youtube_url_start = "<a href=";
-        var youtube_url_builder = "\"https://youtu.be/";
-        var youtube_url_end = "</a>";
-        var youtube_url_time;
-        var youtube_url;
-	var row_counter = 0;
-
-        while (no_print_counter < allKeys.length) {
-            for (var i = 0; i < allKeys.length; i++) {
-                if (i == 0) {
-	    	    // Start of table row
-                    myTable += "<tr>";
-                }
-                if (typeof result[allKeys[i]][row_counter] !== 'undefined') {
-                    youtube_url_builder += (allKeys[i]).toString() + "?t=" + (result[allKeys[i]][row_counter]).toString();
-                    youtube_url_time = "\">" + (secToHrMin(result[allKeys[i]][row_counter].toFixed(2))).toString();
-                    youtube_url = youtube_url_start + youtube_url_builder + youtube_url_time + youtube_url_end;
-                    myTable += "<td style='width: 100px; text-align: center;'>" + youtube_url + "</td>";
-                    youtube_url_builder = "\"https://youtu.be/";
-                    no_print_counter = 0;
-
-                } else {
-                    myTable += "<td style='width: 100px; text-align: center;'> </td>";
-                    no_print_counter++;
-
-                }
-            }
-	    // End of table row
-            myTable += "</tr>";
-	    row_counter++;
-        }
-
-
-        /*
-                for (var i = 0; i < result[allKeys[i]].length; i++) {
-                    for (var j = 0; j < allKeys.length; j++) {
-                        if (i == 0 && j == 0) {
-                            myTable += "<tr>";
-                        }
-
-                        myTable += "<td style='width: 100px;'>" + secToHrMin(result[allKeys[i]][j].toFixed(2)) + "</td>";
-
-                    }
-                    if ((j == (allKeys.length - 1)) && (i == result[allKeys[i]].length - 1)) {
-                        myTable += "</tr>";
-                    }
-
-
-                }
-        	*/
-
-
-
-        /*
-         */
-
-        myTable += "</table>";
-        document.write(myTable);
-
+        insertTableTitle(allKeys);
+	insertTableData(allKeys, result);
     });
 
-    /*
-                                                    var h = document.createElement("H1");
-
-                                                    //TODO:(shelbyt): Need to pass in correct key of title
-                                                    var myTable = "<table><tr><td style='width: 100px; color: red;'>" + result["videoId"] + "</td></tr>"; myTable += "<tr><td style='width: 100px;                   '>---------------</td></tr>";
-
-                                                    for (var i = 0; i < 5; i++) {
-                                                        //result["key"][i] = myArray[i].toFixed(3);
-                                                        myTable += "<td style='width: 100px;'>" + result["key"][i] + "</td></tr>";
-                                                    }
-                            			
-                                                    myTable += "</table>"; document.write(myTable);
-
-                            //console.log(result);
-                            //document.getElementById('yellow').innerHTML = result["key"][0];
-                            //console output = {myTestVar:'my test var'}
-    		    */
     var divs = document.querySelectorAll('div');
     for (var i = 0; i < divs.length; i++) {
         divs[i].addEventListener('click', click);
