@@ -81,5 +81,10 @@ hs_err_pid*
 #temp files
 *.ttml
 *.csv
+venv
+.DS_Store
 
-
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
