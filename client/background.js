@@ -41,16 +41,18 @@ chrome.commands.onCommand.addListener(function(command) {
 
 
                 //console.debug("before post");
+		chrome.tabs.executeScript(null, {file: "jquery-3.1.0.min.js"}, function() {
                 chrome.tabs.executeScript(null, {
                         file: "inject.js"
                     },
                     function(test) {
-                        var variable = 10;
+                        //var variable = 10;
+			//test = 999;
                         time.push(test);
-                        console.log(variable);
+                        //console.log(variable);
 
-                        //console.log(time);
-                        //console.log(time[0][0]);
+                       // console.log(test);
+                       // console.log(time[0][0]);
                         stamp = time[0][0];
                         video_time = stamp;
                         //console.log(time.length);
@@ -85,6 +87,7 @@ chrome.commands.onCommand.addListener(function(command) {
 
 
                     });
+		});
 
                 console.log("before post");
                 jQuery.ajax({
@@ -136,6 +139,5 @@ chrome.commands.onCommand.addListener(function(command) {
                     }
                 };
             }
-        }
-    );
+        });
 });

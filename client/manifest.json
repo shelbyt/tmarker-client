@@ -15,6 +15,9 @@
   "permissions": [
     "storage","activeTab", "tabs", "http://*/*", "https://*/*"
   ],
+
+  "web_accessible_resources": ["notify.html"],
+
   "browser_action": {
       "default_title": "Set this page's color.",
       "default_icon": "icon.png",
