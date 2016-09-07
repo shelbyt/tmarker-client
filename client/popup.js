@@ -58,13 +58,15 @@ function insertTableRow(row_counter, all_keys, storage) {
     for (var i = 0; i < all_keys.length; i++) {
         if (typeof storage[all_keys[i]][row_counter] !== 'undefined') {
             youtube_url_builder += (all_keys[i]).toString() + "?t=" + (storage[all_keys[i]][row_counter]).toString();
+
+            //TODO:(shelbyt): Check other times when this toFixed is needed
             youtube_url_time = (secToHrMin(storage[all_keys[i]][row_counter].toFixed(2))).toString();
 
             cell1 = document.createElement("td");
-	    var a = document.createElement('a');
-	    var link_text = document.createTextNode(youtube_url_time);
-	    a.appendChild(link_text);
-	    a.href = youtube_url_builder;
+            var a = document.createElement('a');
+            var link_text = document.createTextNode(youtube_url_time);
+            a.appendChild(link_text);
+            a.href = youtube_url_builder;
 
             cell1.appendChild(a);
             row.appendChild(cell1);
@@ -85,11 +87,11 @@ function insertTableRow(row_counter, all_keys, storage) {
     return no_print_counter;
 }
 
-function insertTableData(all_keys,storage) {
-        var row_counter = 0;
-        while (insertTableRow(row_counter, all_keys, storage) < all_keys.length) {
-            row_counter++;
-        }
+function insertTableData(all_keys, storage) {
+    var row_counter = 0;
+    while (insertTableRow(row_counter, all_keys, storage) < all_keys.length) {
+        row_counter++;
+    }
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -128,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log(allKeys);
 
         insertTableTitle(allKeys);
-	insertTableData(allKeys, result);
+        insertTableData(allKeys, result);
     });
 
     var divs = document.querySelectorAll('div');
