@@ -57,7 +57,7 @@ function insertTableRow(row_counter, all_keys, storage) {
 
     for (var i = 0; i < all_keys.length; i++) {
         if (typeof storage[all_keys[i]][row_counter] !== 'undefined') {
-            youtube_url_builder += (all_keys[i]).toString() + "?t=" + (storage[all_keys[i]][row_counter]).toString();
+            youtube_url_builder += (all_keys[i]).toString() + "?t=" + (storage[all_keys[i]][row_counter].toFixed(0)).toString();
 
             //TODO:(shelbyt): Check other times when this toFixed is needed
             youtube_url_time = (secToHrMin(storage[all_keys[i]][row_counter].toFixed(2))).toString();
