@@ -31,12 +31,12 @@ function secToHrMin(time) {
     return ret;
 }
 
-function insertTableTitle(all_keys) {
+function insertTableTitle(all_keys, storage) {
     tabBody = document.getElementById("main");
     row = document.createElement("tr");
     for (var i = 0; i < all_keys.length; i++) {
         cell1 = document.createElement("th");
-        textnode1 = document.createTextNode(all_keys[i]);
+        textnode1 = document.createTextNode(storage[all_keys[i]].video_name);
         cell1.appendChild(textnode1);
         row.appendChild(cell1);
     }
@@ -54,13 +54,14 @@ function insertTableRow(row_counter, all_keys, storage) {
     var youtube_url_end = "</a>";
     var youtube_url_time;
     var youtube_url;
-
+    
     for (var i = 0; i < all_keys.length; i++) {
-        if (typeof storage[all_keys[i]][row_counter] !== 'undefined') {
-            youtube_url_builder += (all_keys[i]).toString() + "?t=" + (storage[all_keys[i]][row_counter].toFixed(0)).toString();
+        if (typeof storage[all_keys[i]].ticks[row_counter] !== 'undefined') {
+            youtube_url_builder += (all_keys[i]).toString() + "?t=" + 
+		    (storage[all_keys[i]].ticks[row_counter].toFixed(0)).toString();
 
             //TODO:(shelbyt): Check other times when this toFixed is needed
-            youtube_url_time = (secToHrMin(storage[all_keys[i]][row_counter].toFixed(2))).toString();
+            youtube_url_time = (secToHrMin(storage[all_keys[i]].ticks[row_counter].toFixed(2))).toString();
 
             cell1 = document.createElement("td");
             var a = document.createElement('a');
@@ -88,6 +89,7 @@ function insertTableRow(row_counter, all_keys, storage) {
 }
 
 function insertTableData(all_keys, storage) {
+
     var row_counter = 0;
     while (insertTableRow(row_counter, all_keys, storage) < all_keys.length) {
         row_counter++;
@@ -129,7 +131,8 @@ document.addEventListener('DOMContentLoaded', function() {
         var allKeys = Object.keys(result);
         console.log(allKeys);
 
-        insertTableTitle(allKeys);
+	//TODO:*****CRITICAL******* 
+        insertTableTitle(allKeys, result);
         insertTableData(allKeys, result);
     });
 

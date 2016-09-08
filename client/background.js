@@ -1,6 +1,7 @@
 var video_url;
 var video_id;
 var video_time;
+var video_name;
 
 function youtubeParser(url) {
     var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
@@ -41,53 +42,66 @@ chrome.commands.onCommand.addListener(function(command) {
 
 
                 //console.debug("before post");
-		chrome.tabs.executeScript(null, {file: "jquery-3.1.0.min.js"}, function() {
                 chrome.tabs.executeScript(null, {
-                        file: "inject.js"
-                    },
-                    function(test) {
-                        //var variable = 10;
-			//test = 999;
-                        time.push(test);
-                        //console.log(variable);
+                    file: "jquery-3.1.0.min.js"
+                }, function() {
+                    chrome.tabs.executeScript(null, {
+                            file: "inject.js"
+                        },
+                        function(test) {
 
-                       // console.log(test);
-                       // console.log(time[0][0]);
-                        stamp = time[0][0];
-                        video_time = stamp;
-                        //console.log(time.length);
-                        chrome.storage.local.get(function(cfg) {
+                            var build_youtube_api = "https://www.googleapis.com/youtube/v3/videos?id=" + video_id + "&key=AIzaSyAq35uqJa3xJm2MN72bk2mSPobkMketxfk&part=snippet";
+                            console.log(build_youtube_api);
+
+                            $.ajax({
+                                async: false,
+                                dataType: "json",
+                                url: build_youtube_api,
+                                success: function(data) {
+                                    if (typeof(data.items[0]) != "undefined") {
+                                        console.log('video exists ' + data.items[0].snippet.title);
+                                        video_name = data.items[0].snippet.title.substring(0, 10);
+                                        console.log(video_name);
+                                    } else {
+                                        console.log('video not exists');
+                                    }
+                                }
+                            });
+                            time.push(test);
+                            //console.log(variable);
+
+                            // console.log(test);
+                            // console.log(time[0][0]);
+                            stamp = time[0][0];
+                            video_time = stamp;
+                            //console.log(time.length);
+                            chrome.storage.local.get(function(cfg) {
+
+
+                                if (typeof(cfg[video_id]) !== 'undefined') {
+                                    cfg[video_id].ticks.push(stamp);
+                                } else {
+                                    var initialize_struct = {
+                                        video_name: video_name,
+                                        ticks: [stamp]
+                                    }
+                                    cfg[video_id] = initialize_struct;
+                                    console.log(cfg);
+                                }
+
+                                chrome.storage.local.set(cfg);
+                            });
                             /*
-			var tick_key = cfg[video_id];
-                    if (typeof(tick_key) !== 'undefined' &&
-                        tick_key["ticks"] instanceof Array) {
-
-                        tick_key["ticks"].push(stamp);
-                    } else {
-                        tick_key["ticks"] = [stamp];
-                    }
-		    */
+                                chrome.storage.sync.set({ "data" : test }, function() {
+                                if (chrome.runtime.error) {
+                                  console.log("Runtime error.");
+                                }
+                              });
+                            */
 
 
-                            if (typeof(cfg[video_id]) !== 'undefined' && cfg[video_id] instanceof Array) {
-                                cfg[video_id].push(stamp);
-                            } else {
-                                cfg[video_id] = [stamp];
-                            }
-
-                            chrome.storage.local.set(cfg);
                         });
-                        /*
-                            chrome.storage.sync.set({ "data" : test }, function() {
-                            if (chrome.runtime.error) {
-                              console.log("Runtime error.");
-                            }
-                          });
-                        */
-
-
-                    });
-		});
+                });
 
                 console.log("before post");
                 jQuery.ajax({
