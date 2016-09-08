@@ -10,8 +10,8 @@ iFrame.height = "50px";
 tube.insertBefore(iFrame, tube.childNodes[0]);
 
 setTimeout(function(){
-$('#frame_notify').remove();
-},1500);
+$('#frame_notify').fadeOut(500);
+},1000)
 
 var video = document.getElementsByTagName("video")[0];
 video.currentTime
