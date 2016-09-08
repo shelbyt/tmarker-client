@@ -40,8 +40,6 @@ chrome.commands.onCommand.addListener(function(command) {
 
                 var storage = chrome.storage.local;
 
-
-                //console.debug("before post");
                 chrome.tabs.executeScript(null, {
                     file: "jquery-3.1.0.min.js"
                 }, function() {
@@ -68,16 +66,9 @@ chrome.commands.onCommand.addListener(function(command) {
                                 }
                             });
                             time.push(test);
-                            //console.log(variable);
-
-                            // console.log(test);
-                            // console.log(time[0][0]);
                             stamp = time[0][0];
                             video_time = stamp;
-                            //console.log(time.length);
                             chrome.storage.local.get(function(cfg) {
-
-
                                 if (typeof(cfg[video_id]) !== 'undefined') {
                                     cfg[video_id].ticks.push(stamp);
                                 } else {
@@ -91,14 +82,6 @@ chrome.commands.onCommand.addListener(function(command) {
 
                                 chrome.storage.local.set(cfg);
                             });
-                            /*
-                                chrome.storage.sync.set({ "data" : test }, function() {
-                                if (chrome.runtime.error) {
-                                  console.log("Runtime error.");
-                                }
-                              });
-                            */
-
 
                         });
                 });
@@ -116,20 +99,10 @@ chrome.commands.onCommand.addListener(function(command) {
                         "videoId": video_id
                     }),
                     success: function(data) {
-                        //console.log("inside post");
                         console.log(data);
-                        //console.debug(data);
                     }
                 });
                 console.log("after post");
-                /*
-                        storage.get("key", function(result) {
-                            console.log(result);
-                            console.log(result["key"][0])
-
-                        })
-                	*/
-
 
                 function callback(bytes) {
                     console.log("Total bytes in use: " + bytes);

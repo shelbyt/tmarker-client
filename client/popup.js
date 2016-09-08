@@ -49,11 +49,8 @@ function insertTableRow(row_counter, all_keys, storage) {
     row = document.createElement("tr");
 
     var no_print_counter = 0;
-    var youtube_url_start = "<a href=";
     var youtube_url_builder = "https://youtu.be/";
-    var youtube_url_end = "</a>";
     var youtube_url_time;
-    var youtube_url;
     
     for (var i = 0; i < all_keys.length; i++) {
         if (typeof storage[all_keys[i]].ticks[row_counter] !== 'undefined') {
@@ -97,41 +94,13 @@ function insertTableData(all_keys, storage) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-
-
-    // var h = document.createElement("H1");
-    // var t = document.createTextNode("Hello World");
-    // h.appendChild(t);
-    // document.body.appendChild(h);
-    /*
-        chrome.tabs.query({
-                'active': true,
-                'windowId': chrome.windows.WINDOW_ID_CURRENT
-            },
-            function(tabs) {
-                console.log(youtube_parser(tabs[0].url));
-            }
-        );
-        */
-    /*
-        chrome.storage.local.get(null, function(items) {
-
-            console.log(items);
-            var allKeys = Object.keys(items);
-            console.log(allKeys);
-        });
-        */
-
-
     var storage = chrome.storage.local;
-    //TODO:(shelbyt): Change to get key AND title of video
     storage.get(null, function(result) {
         console.log(result);
         console.log(result);
         var allKeys = Object.keys(result);
         console.log(allKeys);
 
-	//TODO:*****CRITICAL******* 
         insertTableTitle(allKeys, result);
         insertTableData(allKeys, result);
     });
