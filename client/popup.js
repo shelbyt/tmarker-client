@@ -6,6 +6,19 @@ function click(e) {
 
     window.close();
 }
+document.addEventListener('DOMContentLoaded', function() {
+    var link = document.getElementById('clearStorageButton');
+    link.addEventListener('click', function() {
+        $("#main").remove();
+        chrome.storage.local.clear(function() {
+            var error = chrome.runtime.lastError;
+            if (error) {
+                console.error(error);
+            }
+        });
+    });
+});
+
 
 
 function secToHrMin(time) {
@@ -51,11 +64,11 @@ function insertTableRow(row_counter, all_keys, storage) {
     var no_print_counter = 0;
     var youtube_url_builder = "https://youtu.be/";
     var youtube_url_time;
-    
+
     for (var i = 0; i < all_keys.length; i++) {
         if (typeof storage[all_keys[i]].ticks[row_counter] !== 'undefined') {
-            youtube_url_builder += (all_keys[i]).toString() + "?t=" + 
-		    (storage[all_keys[i]].ticks[row_counter].toFixed(0)).toString();
+            youtube_url_builder += (all_keys[i]).toString() + "?t=" +
+                (storage[all_keys[i]].ticks[row_counter].toFixed(0)).toString();
 
             //TODO:(shelbyt): Check other times when this toFixed is needed
             youtube_url_time = (secToHrMin(storage[all_keys[i]].ticks[row_counter].toFixed(2))).toString();
