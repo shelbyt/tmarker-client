@@ -89,15 +89,19 @@ chrome.commands.onCommand.addListener(function(command) {
                 console.log("before post");
                 jQuery.ajax({
                     type: "POST",
-                    async: false,
                     dataType: "json",
+                    async: true,
                     contentType: "application/json; charset=utf-8",
-                    url: "http://ec2-52-42-224-68.us-west-2.compute.amazonaws.com:8080/weedwizard",
-
+                    url:"http://127.0.0.1:5000/",
                     data: JSON.stringify({
-                        "tickedAt": video_time,
-                        "videoId": video_id
+                        "time": video_time,
+                        "id": video_id
                     }),
+
+                    complete: function(data) {
+                        console.log(data);
+                    },
+		    
                     success: function(data) {
                         console.log(data);
                     }
