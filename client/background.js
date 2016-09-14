@@ -58,7 +58,7 @@ chrome.commands.onCommand.addListener(function(command) {
                                 success: function(data) {
                                     if (typeof(data.items[0]) != "undefined") {
                                         console.log('video exists ' + data.items[0].snippet.title);
-                                        video_name = data.items[0].snippet.title.substring(0, 10);
+                                        video_name = data.items[0].snippet.title;
                                         console.log(video_name);
                                     } else {
                                         console.log('video not exists');
@@ -68,44 +68,58 @@ chrome.commands.onCommand.addListener(function(command) {
                             time.push(test);
                             stamp = time[0][0];
                             video_time = stamp;
+
+
+                            console.log("before post");
+                            jQuery.ajax({
+                                type: "POST",
+                                dataType: "json",
+                                async: true,
+                                contentType: "application/json; charset=utf-8",
+                                url: "http://127.0.0.1:5000/",
+                                data: JSON.stringify({
+                                    "time": video_time,
+                                    "id": video_id
+                                }),
+
+				//TODO(shelbyt): Double check edge cases
+                                complete: function(data) {
+
                             chrome.storage.local.get(function(cfg) {
                                 if (typeof(cfg[video_id]) !== 'undefined') {
                                     cfg[video_id].ticks.push(stamp);
+                                    cfg[video_id].notes.push(data.responseText);
                                 } else {
                                     var initialize_struct = {
                                         video_name: video_name,
-                                        ticks: [stamp]
+                                        ticks: [stamp],
+				        notes: [data.responseText]
                                     }
                                     cfg[video_id] = initialize_struct;
                                     console.log(cfg);
                                 }
 
+				// DONT FORGET TO SET STORAGE AFTER WRITING
                                 chrome.storage.local.set(cfg);
+                                console.log(cfg);
+
+                            });
+
+                                    //console.log(data);
+				    //note_text = data.responseText
+				    //console.log("len of notes = " + cfg[video_id].notes.length)
+			            //cfg[video_id].notes.push(data.responseText);
+			            //console.log(cfg);
+                                },
+
+                                success: function(data) {
+                                    console.log(data);
+                                }
                             });
 
                         });
                 });
 
-                console.log("before post");
-                jQuery.ajax({
-                    type: "POST",
-                    dataType: "json",
-                    async: true,
-                    contentType: "application/json; charset=utf-8",
-                    url:"http://127.0.0.1:5000/",
-                    data: JSON.stringify({
-                        "time": video_time,
-                        "id": video_id
-                    }),
-
-                    complete: function(data) {
-                        console.log(data);
-                    },
-		    
-                    success: function(data) {
-                        console.log(data);
-                    }
-                });
                 console.log("after post");
 
                 function callback(bytes) {

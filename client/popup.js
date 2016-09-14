@@ -80,6 +80,10 @@ function insertTableRow(row_counter, all_keys, storage) {
             a.href = youtube_url_builder;
 
             cell1.appendChild(a);
+	    var note = document.createElement('p');
+	    var note_text = document.createTextNode(storage[all_keys[i]].notes[row_counter]);
+	    note.appendChild(note_text);
+	    cell1.appendChild(note);
             row.appendChild(cell1);
 
             youtube_url_builder = "https://youtu.be/";
