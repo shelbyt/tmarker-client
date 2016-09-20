@@ -9,16 +9,21 @@ function click(e) {
 document.addEventListener('DOMContentLoaded', function() {
     var link = document.getElementById('clearStorageButton');
     link.addEventListener('click', function() {
-        $("#main").remove();
-        chrome.storage.local.clear(function() {
-            var error = chrome.runtime.lastError;
-            if (error) {
-                console.error(error);
-            }
+        chrome.tabs.create({
+		url:'/diary.html'
         });
-    });
-});
 
+    });
+//    link.addEventListener('click', function() {
+//        $("#main").remove();
+//        chrome.storage.local.clear(function() {
+//            var error = chrome.runtime.lastError;
+//            if (error) {
+//                console.error(error);
+//            }
+//        });
+//    });
+});
 
 
 function secToHrMin(time) {
