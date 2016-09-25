@@ -51,6 +51,7 @@ chrome.commands.onCommand.addListener(function(command) {
                             var build_youtube_api = "https://www.googleapis.com/youtube/v3/videos?id=" + video_id + "&key=AIzaSyAq35uqJa3xJm2MN72bk2mSPobkMketxfk&part=snippet";
                             console.log(build_youtube_api);
 
+			    // TODO:(shelbyt): Does this have to be synchronous?
                             $.ajax({
                                 async: false,
                                 dataType: "json",
