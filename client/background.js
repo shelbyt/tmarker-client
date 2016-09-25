@@ -85,31 +85,61 @@ chrome.commands.onCommand.addListener(function(command) {
 				//TODO(shelbyt): Double check edge cases
                                 complete: function(data) {
 
+
                             chrome.storage.local.get(function(cfg) {
-                                if (typeof(cfg[video_id]) !== 'undefined') {
-                                    cfg[video_id].ticks.push(stamp);
-                                    cfg[video_id].notes.push(data.responseText);
-                                } else {
-                                    var initialize_struct = {
-                                        video_name: video_name,
-                                        ticks: [stamp],
-				        notes: [data.responseText]
+				    /*Current Storage Structure:
+				     * STORAGE:{}
+				     *    \
+				     *     |-> active:
+				     *     |-> vid_count:
+				     *     |-> vid_dir:{}
+				     *            \ 
+				     *             |->$vid_id:
+				     *                 \
+				     *                  |->notes=[]
+				     *                  |->ticks=[]
+				    * */
+
+                                if (typeof(cfg["vid_count"]) === 'undefined') {
+					// First instance of extension
+					var initialize_vid_struct = {
+                                        	video_name: video_name,
+                                        	ticks: [stamp],
+				       		notes: [data.responseText]
                                     }
-                                    cfg[video_id] = initialize_struct;
-                                    console.log(cfg);
-                                }
+
+					var initialize_vid_dir = {};
+					initialize_vid_dir[video_id] = initialize_vid_struct;
+
+					cfg["vid_dir"] = initialize_vid_dir;
+					cfg["vid_count"] = 1;
+
+                                    }
+
+				    else {
+				    if(typeof cfg["vid_dir"][video_id] === 'undefined') {
+					// First instance of video
+					var initialize_vid_struct = {
+                                        	video_name: video_name,
+                                        	ticks: [stamp],
+				       		notes: [data.responseText]
+                                    }
+					cfg["vid_dir"][video_id] = initialize_vid_struct;
+					cfg["vid_count"]++;
+
+				    }
+
+				    else {
+					cfg["vid_dir"][video_id].ticks.push(stamp);
+					cfg["vid_dir"][video_id].notes.push(data.responseText);
+				    }
+				    }
+					cfg["active"] = video_id;
 
 				// DONT FORGET TO SET STORAGE AFTER WRITING
                                 chrome.storage.local.set(cfg);
                                 console.log(cfg);
-
-                            });
-
-                                    //console.log(data);
-				    //note_text = data.responseText
-				    //console.log("len of notes = " + cfg[video_id].notes.length)
-			            //cfg[video_id].notes.push(data.responseText);
-			            //console.log(cfg);
+			    });
                                 },
 
                                 success: function(data) {

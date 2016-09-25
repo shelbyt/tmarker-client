@@ -8,21 +8,22 @@ function click(e) {
 }
 document.addEventListener('DOMContentLoaded', function() {
     var link = document.getElementById('clearStorageButton');
-    link.addEventListener('click', function() {
-        chrome.tabs.create({
-		url:'/diary.html'
-        });
 
-    });
 //    link.addEventListener('click', function() {
-//        $("#main").remove();
-//        chrome.storage.local.clear(function() {
-//            var error = chrome.runtime.lastError;
-//            if (error) {
-//                console.error(error);
-//            }
+//        chrome.tabs.create({
+//		url:'/diary.html'
 //        });
+//
 //    });
+    link.addEventListener('click', function() {
+        $("#main").remove();
+        chrome.storage.local.clear(function() {
+            var error = chrome.runtime.lastError;
+            if (error) {
+                console.error(error);
+            }
+        });
+    });
 });
 
 
@@ -59,6 +60,69 @@ function insertTableTitle(all_keys, storage) {
         row.appendChild(cell1);
     }
     tabBody.appendChild(row);
+}
+
+function insertTitle(active_key, active_key_data) {
+    tabBody = document.getElementById("main");
+    row = document.createElement("tr");
+    cell1 = document.createElement("th");
+    textnode1 = document.createTextNode(active_key_data.video_name);
+    cell1.appendChild(textnode1);
+    row.appendChild(cell1);
+    tabBody.appendChild(row);
+}
+
+function insertData(active_key, active_key_data) {
+
+    for (var i = 0; i < active_key_data.ticks.length; i++) {
+
+        if (typeof active_key_data.ticks[i] !== 'undefined') {
+
+    var youtube_url_builder = "https://youtu.be/";
+    var youtube_url_time;
+    tabBody = document.getElementById("main");
+    row = document.createElement("tr");
+            youtube_url_builder += active_key.toString() + "?t=" +
+                (active_key_data.ticks[i].toFixed(0)).toString();
+
+            //TODO:(shelbyt): Check other times when this toFixed is needed
+            youtube_url_time = (secToHrMin(active_key_data.ticks[i].toFixed(2))).toString();
+
+            cell1 = document.createElement("td");
+            var a = document.createElement('a');
+            var link_text = document.createTextNode(youtube_url_time);
+            a.appendChild(link_text);
+            a.href = youtube_url_builder;
+
+            cell1.appendChild(a);
+	    var note = document.createElement('p');
+	    var note_text = document.createTextNode(active_key_data.notes[i]);
+	    note.appendChild(note_text);
+	    cell1.appendChild(note);
+            row.appendChild(cell1);
+
+            youtube_url_builder = "https://youtu.be/";
+
+        } else {
+            cell1 = document.createElement("td");
+            textnode1 = document.createTextNode("");
+            cell1.appendChild(textnode1);
+            row.appendChild(cell1);
+        }
+
+    tabBody.appendChild(row);
+    }
+
+
+
+
+}
+
+function insertTableData(all_keys, storage) {
+    var row_counter = 0;
+    while (insertTableRow(row_counter, all_keys, storage) < all_keys.length) {
+        row_counter++;
+    }
 }
 
 function insertTableRow(row_counter, all_keys, storage) {
@@ -107,14 +171,6 @@ function insertTableRow(row_counter, all_keys, storage) {
     return no_print_counter;
 }
 
-function insertTableData(all_keys, storage) {
-
-    var row_counter = 0;
-    while (insertTableRow(row_counter, all_keys, storage) < all_keys.length) {
-        row_counter++;
-    }
-}
-
 document.addEventListener('DOMContentLoaded', function() {
     var storage = chrome.storage.local;
     storage.get(null, function(result) {
@@ -122,9 +178,11 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log(result);
         var allKeys = Object.keys(result);
         console.log(allKeys);
-
-        insertTableTitle(allKeys, result);
-        insertTableData(allKeys, result);
+	var active_key = result["active"];
+	var active_key_data = result.vid_dir[active_key];
+	
+        insertTitle(active_key, active_key_data);
+        insertData(active_key, active_key_data);
     });
 
     var divs = document.querySelectorAll('div');
