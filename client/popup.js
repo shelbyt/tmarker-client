@@ -171,18 +171,25 @@ function insertTableRow(row_counter, all_keys, storage) {
     return no_print_counter;
 }
 
+// Same parser from background.js
+function youtubeParser(url) {
+    var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+    var match = url.match(regExp);
+    return (match && match[7].length == 11) ? match[7] : false;
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     var storage = chrome.storage.local;
     storage.get(null, function(result) {
-        console.log(result);
-        console.log(result);
-        var allKeys = Object.keys(result);
-        console.log(allKeys);
-	var active_key = result["active"];
-	var active_key_data = result.vid_dir[active_key];
-	
-        insertTitle(active_key, active_key_data);
-        insertData(active_key, active_key_data);
+	chrome.tabs.query({currentWindow: true, active: true}, function(tabs){
+	    current_yturl = tabs[0].url;
+        active_key = youtubeParser(current_yturl);
+        if(active_key in result.vid_dir) {
+            var active_key_data = result.vid_dir[active_key];
+            insertTitle(active_key, active_key_data);
+            insertData(active_key, active_key_data);
+        }
+});
     });
 
     var divs = document.querySelectorAll('div');
