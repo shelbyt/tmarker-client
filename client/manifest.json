@@ -1,10 +1,10 @@
 {
-  "name": "A browser action with a popup that changes the page color",
+  "name": "YTube Marker",
   "background": {
          "scripts": ["jquery-3.1.0.min.js", "background.js"]
        },
 
-  "description": "Change the current page color",
+  "description": "Keep track of video notes!",
   "version": "1.0",
   "commands": {
     "log-time": {
