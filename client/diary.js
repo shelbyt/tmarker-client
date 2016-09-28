@@ -49,9 +49,9 @@ document.addEventListener('DOMContentLoaded', function() {
 	var storage = chrome.storage.local;
 	storage.get(null, function(result) {
 		console.log(result);
-		var allKeys = Object.keys(result);
-		populateSidebar(allKeys, result);
-		populatePage(allKeys, result);
+		var allKeys = Object.keys(result.vid_dir);
+		populateSidebar(allKeys, result.vid_dir);
+		populatePage(allKeys, result.vid_dir);
 	});
 
 	document.getElementById("navButtonOpen").addEventListener('click',function() {

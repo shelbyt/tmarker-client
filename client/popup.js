@@ -26,6 +26,17 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// Display new tab note directory
+document.addEventListener('DOMContentLoaded', function() {
+    var link = document.getElementById('viewAllNotes');
+    link.addEventListener('click', function() {
+        chrome.tabs.create({
+		url:'/diary.html'
+        });
+
+    });
+});
+
 
 function secToHrMin(time) {
     // Minutes and seconds
