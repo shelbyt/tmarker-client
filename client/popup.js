@@ -11,7 +11,12 @@ document.addEventListener('DOMContentLoaded', function() {
     link.addEventListener('click', function() {
         var result = confirm("This will delete ALL NOTES are you sure you want to do this?")
         if(result == true) {
-            $("#main").remove();
+            // Empty better than remove, because then we can append to the main
+            // element
+            $("#main").empty();
+            // TODO(shelbyt): Better way to make sure this isn't hardcoded class
+            // values. Will come back to haunt me im sure.
+            $("#main").append("<p class=\"popup\">Win/Linux: Ctrl+Shift+L\nMac: Cmd+Shift+K</p>");
             chrome.storage.local.clear(function() {
                 var error = chrome.runtime.lastError;
                 if (error) {
