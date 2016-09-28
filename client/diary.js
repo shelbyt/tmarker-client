@@ -26,19 +26,32 @@ function populatePage(all_keys, storage) {
 			else {
 				note_text = document.createTextNode("Notes unavailable");
 			}
+
+            var hide_button = document.createElement("button");
+            hide_button.className = "expander";
+            hide_button.id = all_keys[i]+storage[all_keys[i]].ticks[j].toFixed(0).toString();
+
 			note.appendChild(note_text);
 			title.appendChild(note);
+            title.appendChild(hide_button);
 
 			var embed_video = document.createElement("iframe");
 			youtube_base = "https://www.youtube.com/embed/"
 			youtube_time = "?start="
+            curr_time_val = storage[all_keys[i]].ticks[j].toFixed(0).toString();
+            embed_video.className = "hiddenVid"
+            // id of the video is "v"+id+currenttime
+            embed_video.id = "v"+all_keys[i]+curr_time_val
 			embed_video.width = "560";
 			embed_video.height = "315";
 			embed_video.frameBorder = "0";
 			embed_video.src = youtube_base + all_keys[i].toString() +
 				youtube_time + 
 				storage[all_keys[i]].ticks[j].toFixed(0).toString();
-			title.appendChild(embed_video);
+
+            var vid_div = document.createElement("div");
+            vid_div.appendChild(embed_video);
+			title.appendChild(vid_div);
 		}
 		frontBody.appendChild(title);
 	}
@@ -53,6 +66,13 @@ document.addEventListener('DOMContentLoaded', function() {
 		populateSidebar(allKeys, result.vid_dir);
 		populatePage(allKeys, result.vid_dir);
 	});
+
+        $('.mainnav').on('click','button', function () {
+            var selector = $(this).attr('id');  // get corresponding element
+            console.log(selector);
+            $("#v"+selector).slideToggle();
+        });
+
 
 	document.getElementById("navButtonOpen").addEventListener('click',function() {
 		document.getElementById("mySidenav").style.width = "250px";
