@@ -192,7 +192,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	    current_yturl = tabs[0].url;
         active_key = youtubeParser(current_yturl);
         // If this isn't a youtube URL then default to message
-        if (active_key === false ) {
+        if (active_key === false || typeof(result) === 'undefined' || typeof(result.vid_dir) === 'undefined') {
             tabBody = document.getElementById("main");
             empty_popup = document.createElement('p');
             empty_popup.className = "popup";
