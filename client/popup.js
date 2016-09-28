@@ -184,6 +184,19 @@ document.addEventListener('DOMContentLoaded', function() {
 	chrome.tabs.query({currentWindow: true, active: true}, function(tabs){
 	    current_yturl = tabs[0].url;
         active_key = youtubeParser(current_yturl);
+        // If this isn't a youtube URL then default to message
+        if (active_key === false ) {
+            tabBody = document.getElementById("main");
+            empty_popup = document.createElement('p');
+            empty_popup.className = "popup";
+            empty_popup_text = document.createTextNode("Win/Linux: Ctrl+Shift+L\n \
+                                                        Mac: Cmd+Shift+K");
+            empty_popup.appendChild(empty_popup_text);
+            tabBody.appendChild(empty_popup);
+        }
+
+        // Code is repeated here because if active_key evaluates to false
+        //  then there is an error comparing 'false' with 'in' operator
         if(active_key in result.vid_dir) {
             var active_key_data = result.vid_dir[active_key];
             insertTitle(active_key, active_key_data);
