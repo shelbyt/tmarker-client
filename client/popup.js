@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', function() {
             empty_popup.appendChild(empty_popup_text);
             tabBody.appendChild(empty_popup);
         }
-
+        else {
         // Code is repeated here because if active_key evaluates to false
         //  then there is an error comparing 'false' with 'in' operator
         if(active_key in result.vid_dir) {
@@ -212,6 +212,7 @@ document.addEventListener('DOMContentLoaded', function() {
             tabBody.appendChild(empty_popup);
 
         }
+       }
 });
     });
 
