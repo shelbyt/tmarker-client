@@ -197,4 +197,4 @@ chrome.commands.onCommand.addListener(debounce(function() {
                 };
             }
         });
-}, 10000, true));
+}, 2000, true));
