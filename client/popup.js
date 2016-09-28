@@ -189,6 +189,16 @@ document.addEventListener('DOMContentLoaded', function() {
             insertTitle(active_key, active_key_data);
             insertData(active_key, active_key_data);
         }
+        else {
+            tabBody = document.getElementById("main");
+            empty_popup = document.createElement('p');
+            empty_popup.className = "popup";
+            empty_popup_text = document.createTextNode("Win/Linux: Ctrl+Shift+L\n \
+                                                        Mac: Cmd+Shift+K");
+            empty_popup.appendChild(empty_popup_text);
+            tabBody.appendChild(empty_popup);
+
+        }
 });
     });
 
