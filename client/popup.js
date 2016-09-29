@@ -39,17 +39,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
-    var link = document.getElementById('viewAllNotes');
-
-    link.addEventListener('click', function() {
-        chrome.tabs.create({
-		url:'/diary.html'
-        });
-
-    });
-});
-
-document.addEventListener('DOMContentLoaded', function() {
     var link = document.getElementById('exportPdfButton');
     link.addEventListener('click', function() {
 
