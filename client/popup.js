@@ -38,6 +38,54 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+    var link = document.getElementById('viewAllNotes');
+
+    link.addEventListener('click', function() {
+        chrome.tabs.create({
+		url:'/diary.html'
+        });
+
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    var link = document.getElementById('exportPdfButton');
+    var storage = chrome.storage.local;
+    storage.get(null, function(result) {
+
+        link.addEventListener('click', function() {
+            var pdf = new jsPDF('p','pt','letter');
+            source = $('#main')[0];
+            vid_title = result.vid_dir[active_key].video_name;
+            pdf.setFontSize(14);
+            pdf.text(vid_title, 40, 60);
+            margins = {
+                top: 80,
+                bottom: 60,
+                left: 40,
+                width: 522
+            };
+            // all coords and widths are in jsPDF instance's declared units
+            // 'inches' in this case
+            pdf.fromHTML(
+                source, // HTML string or DOM elem ref.
+                margins.left, // x coord
+                margins.top, { // y coord
+                    'width': margins.width, // max width of content on PDF
+                },
+
+                function (dispose) {
+                    // dispose: object with X, Y of the last line add to the PDF
+                    //          this allow the insertion of new lines after html
+                    pdf.save(vid_title.substring(0,10)+'.pdf');
+                }, margins);
+
+        });
+    });
+
+});
+
 
 function secToHrMin(time) {
     // Minutes and seconds
@@ -213,6 +261,8 @@ document.addEventListener('DOMContentLoaded', function() {
             var active_key_data = result.vid_dir[active_key];
             insertTitle(active_key, active_key_data);
             insertData(active_key, active_key_data);
+            result.active = active_key;
+            chrome.storage.local.set(result);
         }
         else {
             tabBody = document.getElementById("main");
@@ -226,6 +276,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
        }
 });
+
     });
 
     var divs = document.querySelectorAll('div');
