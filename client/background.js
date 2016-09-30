@@ -95,7 +95,8 @@ chrome.commands.onCommand.addListener(debounce(function() {
                             console.log("before post");
                             jQuery.ajax({
                                 type: "POST",
-                                dataType: "json",
+                                // We should expect back plain text
+                                dataType: "text/plain",
                                 async: true,
                                 contentType: "application/json; charset=utf-8",
                                 url: "http://127.0.0.1:5000/",
@@ -106,6 +107,7 @@ chrome.commands.onCommand.addListener(debounce(function() {
 
 				//TODO(shelbyt): Double check edge cases
                                 complete: function(data) {
+                                    console.log(data);
 
 
                             chrome.storage.local.get(function(cfg) {
@@ -127,7 +129,9 @@ chrome.commands.onCommand.addListener(debounce(function() {
 					var initialize_vid_struct = {
                                         	video_name: video_name,
                                         	ticks: [stamp],
-				       		notes: [data.responseText]
+                        // Need to parse JSON or else tab chars
+                        // and newlines appear
+				       		notes: [JSON.parse(data.responseText)]
                                     }
 
 					var initialize_vid_dir = {};
@@ -144,7 +148,7 @@ chrome.commands.onCommand.addListener(debounce(function() {
 					var initialize_vid_struct = {
                                         	video_name: video_name,
                                         	ticks: [stamp],
-				       		notes: [data.responseText]
+                        notes: [JSON.parse(data.responseText)]
                                     }
 					cfg["vid_dir"][video_id] = initialize_vid_struct;
 					cfg["vid_count"]++;
@@ -153,7 +157,7 @@ chrome.commands.onCommand.addListener(debounce(function() {
 
 				    else {
 					cfg["vid_dir"][video_id].ticks.push(stamp);
-					cfg["vid_dir"][video_id].notes.push(data.responseText);
+					cfg["vid_dir"][video_id].notes.push(JSON.parse(data.responseText));
 				    }
 				    }
 					cfg["active"] = video_id;
