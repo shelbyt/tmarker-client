@@ -29,7 +29,16 @@ function populatePage(all_keys, storage) {
 
             var hide_button = document.createElement("button");
             hide_button.className = "expander";
-            hide_button.id = all_keys[i]+storage[all_keys[i]].ticks[j].toFixed(0).toString();
+
+            // If there is some bug and the time stamp for a video
+            // is null. Should NOT happen.
+            if(storage[all_keys[i]].ticks[j] == null){
+                bookmarked_time = 0;
+            }
+            else {
+                bookmarked_time = storage[all_keys[i]].ticks[j].toFixed(0).toString();
+            }
+            hide_button.id = all_keys[i] + bookmarked_time;
 
 			note.appendChild(note_text);
 			title.appendChild(note);
@@ -38,16 +47,15 @@ function populatePage(all_keys, storage) {
 			var embed_video = document.createElement("iframe");
 			youtube_base = "https://www.youtube.com/embed/"
 			youtube_time = "?start="
-            curr_time_val = storage[all_keys[i]].ticks[j].toFixed(0).toString();
             embed_video.className = "hiddenVid"
             // id of the video is "v"+id+currenttime
-            embed_video.id = "v"+all_keys[i]+curr_time_val
+            embed_video.id = "v"+all_keys[i]+bookmarked_time
 			embed_video.width = "560";
 			embed_video.height = "315";
 			embed_video.frameBorder = "0";
 			embed_video.src = youtube_base + all_keys[i].toString() +
 				youtube_time + 
-				storage[all_keys[i]].ticks[j].toFixed(0).toString();
+				bookmarked_time;
 
             var vid_div = document.createElement("div");
             vid_div.appendChild(embed_video);
