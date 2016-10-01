@@ -38,7 +38,11 @@ function populatePage(all_keys, storage) {
             else {
                 bookmarked_time = storage[all_keys[i]].ticks[j].toFixed(0).toString();
             }
-            hide_button.id = all_keys[i] + bookmarked_time;
+            // We want to start the video 10s before the bookmarked time because
+            // that is where the transcript currently starts from.
+            var transcript_offset = 10;
+            bookmarked_time_offset = Math.max(0,bookmarked_time-transcript_offset);
+            hide_button.id = all_keys[i] + bookmarked_time_offset;
 
 			note.appendChild(note_text);
 			title.appendChild(note);
@@ -49,13 +53,13 @@ function populatePage(all_keys, storage) {
 			youtube_time = "?start="
             embed_video.className = "hiddenVid"
             // id of the video is "v"+id+currenttime
-            embed_video.id = "v"+all_keys[i]+bookmarked_time
+            embed_video.id = "v"+all_keys[i]+bookmarked_time_offset
 			embed_video.width = "560";
 			embed_video.height = "315";
 			embed_video.frameBorder = "0";
 			embed_video.src = youtube_base + all_keys[i].toString() +
 				youtube_time + 
-				bookmarked_time;
+				bookmarked_time_offset;
 
             var vid_div = document.createElement("div");
             vid_div.appendChild(embed_video);
