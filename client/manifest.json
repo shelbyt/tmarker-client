@@ -1,11 +1,11 @@
 {
-  "name": "YTube Marker",
+  "name": "YouTube Marker and Note Generator",
   "background": {
          "scripts": ["jquery-3.1.0.min.js", "background.js"]
        },
 
-  "description": "Keep track of video notes!",
-  "version": "1.0",
+  "description": "Automatically generate and export lecture notes from youtube.",
+  "version": "0.1",
   "commands": {
     "log-time": {
       "suggested_key": { "default": "Ctrl+Shift+X", "mac": "Command+Shift+K" },
