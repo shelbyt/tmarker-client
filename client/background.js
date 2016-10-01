@@ -123,7 +123,7 @@ chrome.commands.onCommand.addListener(debounce(function() {
 				     *                  |->notes=[]
 				     *                  |->ticks=[]
 				    * */
-                                if(data.status === 200) {
+                                if(data.status === 200 && typeof JSON.parse(data.responseText) === 'string') {
                                     server_notes = JSON.parse(data.responseText);
                                 }
                                 else {
