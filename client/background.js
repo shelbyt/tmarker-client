@@ -123,6 +123,13 @@ chrome.commands.onCommand.addListener(debounce(function() {
 				     *                  |->notes=[]
 				     *                  |->ticks=[]
 				    * */
+                                if(data.status === 200) {
+                                    server_notes = JSON.parse(data.responseText);
+                                }
+                                else {
+                                    server_notes = "Server Error: Notes Unavailable";
+                                }
+                                
 
                                 if (typeof(cfg["vid_count"]) === 'undefined') {
 					// First instance of extension
@@ -131,7 +138,7 @@ chrome.commands.onCommand.addListener(debounce(function() {
                                         	ticks: [stamp],
                         // Need to parse JSON or else tab chars
                         // and newlines appear
-				       		notes: [JSON.parse(data.responseText)]
+				       		notes: [server_notes]
                                     }
 
 					var initialize_vid_dir = {};
@@ -148,7 +155,7 @@ chrome.commands.onCommand.addListener(debounce(function() {
 					var initialize_vid_struct = {
                                         	video_name: video_name,
                                         	ticks: [stamp],
-                        notes: [JSON.parse(data.responseText)]
+                        notes: [server_notes]
                                     }
 					cfg["vid_dir"][video_id] = initialize_vid_struct;
 					cfg["vid_count"]++;
@@ -157,7 +164,7 @@ chrome.commands.onCommand.addListener(debounce(function() {
 
 				    else {
 					cfg["vid_dir"][video_id].ticks.push(stamp);
-					cfg["vid_dir"][video_id].notes.push(JSON.parse(data.responseText));
+					cfg["vid_dir"][video_id].notes.push(server_notes);
 				    }
 				    }
 					cfg["active"] = video_id;
