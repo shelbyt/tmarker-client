@@ -8,7 +8,7 @@
   "version": "1.0",
   "commands": {
     "log-time": {
-      "suggested_key": { "default": "Ctrl+Shift+L", "mac": "Command+Shift+K" },
+      "suggested_key": { "default": "Ctrl+Shift+X", "mac": "Command+Shift+K" },
       "description": "Send a 'toggle-feature' event to the extension"
     }
 },

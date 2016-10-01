@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
             $("#main").empty();
             // TODO(shelbyt): Better way to make sure this isn't hardcoded class
             // values. Will come back to haunt me im sure.
-            $("#main").append("<p class=\"popup\">Win/Linux: Ctrl+Shift+L\nMac: Cmd+Shift+K</p>");
+            $("#main").append("<p class=\"popup\">Win/Linux: Ctrl+Shift+X\nMac: Cmd+Shift+K</p>");
             chrome.storage.local.clear(function() {
                 var error = chrome.runtime.lastError;
                 if (error) {
@@ -258,7 +258,7 @@ document.addEventListener('DOMContentLoaded', function() {
             tabBody = document.getElementById("main");
             empty_popup = document.createElement('p');
             empty_popup.className = "popup";
-            empty_popup_text = document.createTextNode("Win/Linux: Ctrl+Shift+L\n \
+            empty_popup_text = document.createTextNode("Win/Linux: Ctrl+Shift+X\n \
                                                         Mac: Cmd+Shift+K");
             empty_popup.appendChild(empty_popup_text);
             tabBody.appendChild(empty_popup);
@@ -279,7 +279,7 @@ document.addEventListener('DOMContentLoaded', function() {
             tabBody = document.getElementById("main");
             empty_popup = document.createElement('p');
             empty_popup.className = "popup";
-            empty_popup_text = document.createTextNode("Win/Linux: Ctrl+Shift+L\n \
+            empty_popup_text = document.createTextNode("Win/Linux: Ctrl+Shift+X\n \
                                                         Mac: Cmd+Shift+K");
             empty_popup.appendChild(empty_popup_text);
             tabBody.appendChild(empty_popup);
