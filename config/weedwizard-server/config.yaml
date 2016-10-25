@@ -1,8 +1,0 @@
-template: Hello, %s!
-defaultName: Stranger
-
-dbName: weedstore
-dbHost: weedstore.cr4nsqeyylw9.us-west-2.rds.amazonaws.com
-dbPort: 5432
-dbUsername: thomas
-dbPassword: weedwizard
