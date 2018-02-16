@@ -3,11 +3,25 @@ var video_id;
 var video_time;
 var video_name;
 
-function youtubeParser(url) {
+function old_youtubeParser(url) {
     var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
     var match = url.match(regExp);
     return (match && match[7].length == 11) ? match[7] : false;
 }
+
+function youtubeParser(url){
+  var ID = '';
+  url = url.replace(/(>|<)/gi,'').split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/);
+  if(url[2] !== undefined) {
+    ID = url[2].split(/[^0-9a-z_\-]/i);
+    ID = ID[0];
+  }
+  else {
+    ID = url;
+  }
+    return ID;
+}
+
 
 function clearStorage() {
 
@@ -26,6 +40,7 @@ function clearStorage() {
 // leading edge, instead of the trailing.
 // Based on: goo.gl/h6CllT
 function debounce(func, wait, immediate) {
+
 	var timeout;
 	return function() {
 		var context = this, args = arguments;
@@ -47,6 +62,7 @@ chrome.commands.onCommand.addListener(debounce(function() {
             'windowId': chrome.windows.WINDOW_ID_CURRENT
         },
         function(tabs) {
+
             // TODO:(shelbyt): Do we have to  cover an edge case
             // in case someone tries to use the hotkey on the chome
             // developer page or some other page like chrome-extension
@@ -99,7 +115,7 @@ chrome.commands.onCommand.addListener(debounce(function() {
                                 dataType: "text/plain",
                                 async: true,
                                 contentType: "application/json; charset=utf-8",
-                                url: "http://127.0.0.1:5000/",
+                                url: "127.0.0.1",
                                 data: JSON.stringify({
                                     "time": video_time,
                                     "id": video_id
