@@ -9,7 +9,10 @@ if($('#frame_notify').length) {
 $('#frame_notify').remove();
 }
 
-var tube = document.getElementById("watch-header");
+var tube = document.getElementById("info");
+//if(tube == null){
+//	tube = document.getElementById("info");
+//}
 var iFrame  = document.createElement ("iframe");
 iFrame.src  = chrome.extension.getURL ("notify.html");
 iFrame.id = "frame_notify";
@@ -21,9 +24,6 @@ tube.insertBefore(iFrame, tube.childNodes[0]);
 setTimeout(function(){
 $('#frame_notify').fadeOut(500);
 },500)
-
-
-
 
 var video = document.getElementsByTagName("video")[0];
 video.currentTime
