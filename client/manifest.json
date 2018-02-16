@@ -5,7 +5,7 @@
        },
 
   "description": "Automatically generate and export lecture notes from youtube.",
-  "version": "0.1",
+  "version": "0.2",
   "commands": {
     "log-time": {
       "suggested_key": { "default": "Ctrl+Shift+X", "mac": "Command+Shift+K" },
